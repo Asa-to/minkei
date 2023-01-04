@@ -1,5 +1,5 @@
 import { Container } from "@mantine/core";
-import { LoginForm } from "src/components/molecules/loginForm";
+import { LoginForm } from "src/components/molecules/LoginForm";
 
 const Login = () => {
 
