@@ -10,7 +10,7 @@ const env = {
   HASURA_ENDPOINT: process.env.HASURA_ENDPOINT,
 }
 
-export const config = () => {
+export const getConfig = () => {
   // configの型チェック(足りない型があればcatchされる)
   try {
     configSchema.parse(env);
@@ -18,5 +18,7 @@ export const config = () => {
     console.error(e);
   }
 
-  return env as Config;
+  return {
+    config: env as Config
+  };
 }
