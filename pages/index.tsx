@@ -27,6 +27,19 @@ const Home = () => {
   });
   const theme = useMantineTheme();
   const router = useRouter();
+  const getUsers = async () => {
+    const result = await apolloClient.query({
+      query: gql`
+        query users {
+          user {
+            id
+            name
+          }
+        }
+      `
+    });
+    setResponse(result.error?.message ?? JSON.stringify(result.data));
+  }
 
   return (
     // TODO Header追加
