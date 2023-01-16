@@ -16,6 +16,7 @@
     "@mantine/dates": "^5.10.0",
     "@mantine/hooks": "^5.9.5",
     "@mantine/next": "^5.9.5",
+    "@mantine/prism": "^5.10.0",
     "@next/font": "13.1.1",
     "@types/node": "18.11.18",
     "@types/react": "18.0.26",
