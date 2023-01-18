@@ -1,5 +1,5 @@
 import { Button, Center, Stack, useMantineTheme } from '@mantine/core';
-import { useLazyQuery } from '@apollo/client';
+import { useLazyQuery, useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { Prism } from '@mantine/prism';
 import { INSERT_USER, USER } from 'src/api/users';
@@ -10,7 +10,7 @@ const Home = () => {
   const router = useRouter();
 
   const [getUsers, { data: userData }] = useLazyQuery(USER);
-  const [insertUser, { data: mudationResult }] = useLazyQuery(INSERT_USER);
+  const [insertUser, { data: mudationResult }] = useMutation(INSERT_USER);
 
   return (
     // TODO Header追加
