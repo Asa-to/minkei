@@ -10,12 +10,12 @@ export const USER = gql`
 `;
 
 export const INSERT_USER = gql`
-  mutation InsertUser{
-    insert_user(objects: { name: "haruka" }){
+  mutation INSERT_USER($name: String!) {
+    insert_user(objects: {name: $name}) {
       returning{
         id
         name
       }
     }
   }
-`;
+`
