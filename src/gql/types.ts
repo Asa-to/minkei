@@ -1,10 +1,11 @@
-/* eslint-disable */
-import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -296,6 +297,7 @@ export type Money_Records_Updates = {
   _inc?: InputMaybe<Money_Records_Inc_Input>;
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<Money_Records_Set_Input>;
+  /** filter the rows which have to be updated */
   where: Money_Records_Bool_Exp;
 };
 
@@ -734,6 +736,7 @@ export enum User_Update_Column {
 export type User_Updates = {
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<User_Set_Input>;
+  /** filter the rows which have to be updated */
   where: User_Bool_Exp;
 };
 
@@ -763,5 +766,74 @@ export type Insert_UserMutationVariables = Exact<{
 export type Insert_UserMutation = { __typename?: 'mutation_root', insert_user?: { __typename?: 'user_mutation_response', returning: Array<{ __typename?: 'user', id: any, name: string }> } | null };
 
 
-export const UserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"User"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UserQuery, UserQueryVariables>;
-export const Insert_UserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"INSERT_USER"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_user"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<Insert_UserMutation, Insert_UserMutationVariables>;
+export const UserDocument = gql`
+    query User {
+  user {
+    name
+    id
+  }
+}
+    `;
+
+/**
+ * __useUserQuery__
+ *
+ * To run a query within a React component, call `useUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUserQuery(baseOptions?: Apollo.QueryHookOptions<UserQuery, UserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserQuery, UserQueryVariables>(UserDocument, options);
+      }
+export function useUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserQuery, UserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserQuery, UserQueryVariables>(UserDocument, options);
+        }
+export type UserQueryHookResult = ReturnType<typeof useUserQuery>;
+export type UserLazyQueryHookResult = ReturnType<typeof useUserLazyQuery>;
+export type UserQueryResult = Apollo.QueryResult<UserQuery, UserQueryVariables>;
+export const Insert_UserDocument = gql`
+    mutation INSERT_USER($name: String!) {
+  insert_user(objects: {name: $name}) {
+    returning {
+      id
+      name
+    }
+  }
+}
+    `;
+export type Insert_UserMutationFn = Apollo.MutationFunction<Insert_UserMutation, Insert_UserMutationVariables>;
+
+/**
+ * __useInsert_UserMutation__
+ *
+ * To run a mutation, you first call `useInsert_UserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsert_UserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertUserMutation, { data, loading, error }] = useInsert_UserMutation({
+ *   variables: {
+ *      name: // value for 'name'
+ *   },
+ * });
+ */
+export function useInsert_UserMutation(baseOptions?: Apollo.MutationHookOptions<Insert_UserMutation, Insert_UserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<Insert_UserMutation, Insert_UserMutationVariables>(Insert_UserDocument, options);
+      }
+export type Insert_UserMutationHookResult = ReturnType<typeof useInsert_UserMutation>;
+export type Insert_UserMutationResult = Apollo.MutationResult<Insert_UserMutation>;
+export type Insert_UserMutationOptions = Apollo.BaseMutationOptions<Insert_UserMutation, Insert_UserMutationVariables>;
