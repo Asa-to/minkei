@@ -14,9 +14,15 @@ const config: CodegenConfig = {
   ],
   documents: ['src/api/**/*.ts'],
   generates: {
-    './src/gql/': {
-      preset: 'client',
-      plugins: []
+    './src/gql/types.ts': {
+      plugins: [
+        'typescript',
+        'typescript-operations',
+        'typescript-react-apollo',
+      ],
+      config: {
+        withHook: true,
+      }
     }
   }
 }
