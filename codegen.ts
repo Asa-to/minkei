@@ -12,7 +12,7 @@ const config: CodegenConfig = {
       }
     }
   ],
-  // documents: ['src/api/**/*.ts'],
+  documents: ['src/api/**/*.ts'],
   generates: {
     './src/gql/': {
       preset: 'client',
