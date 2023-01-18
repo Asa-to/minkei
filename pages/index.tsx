@@ -18,6 +18,7 @@ const Home = () => {
       <Stack>
         <Button onClick={() => router.push('/home')} variant='gradient' gradient={{ from: theme.colors.cyan[0], to: theme.colors.red[6]}} color={theme.colors.cyan[3]}>Go Home</Button>
         <Button onClick={() => router.push('/login')} variant='gradient' gradient={{ from: theme.colors.red[6], to: theme.colors.cyan[0]}}>Go Login Page</Button>
+        <Button onClick={() => router.push('/todo')} variant='gradient' gradient={{ from: theme.colors.red[6], to: theme.colors.cyan[0]}}>Go Todo Page</Button>
         <Button onClick={() => getUsers()} variant='gradient' gradient={{ from: theme.colors.red[6], to: theme.colors.cyan[0]}}>get users</Button>
         <Prism language='json' style={{width: '300px'}}>{userData && JSON.stringify(userData?.user) || 'no data'}</Prism>
       </Stack>
