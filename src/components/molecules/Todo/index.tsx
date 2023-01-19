@@ -1,13 +1,26 @@
 import { ActionIcon, Anchor, Button, Modal, Group, List, Paper, Stack, Text, TextInput, Title } from "@mantine/core";
+import { useForm } from "@mantine/form";
 import { useState } from "react";
 import { BsFillTrashFill } from 'react-icons/bs';
 
+type Form = {
+  title: string,
+  summary: string,
+}
+
 export const Todo = () => {
   const [opened, setOpened] = useState(false);
-  const [tasks, setTasks] = useState<{title: string, summary: string, id: number}[]>([]);
-  const [title, setTitle] = useState('');
-  const [summary, setSummary] = useState('');
-  const [id, setId] = useState(0);
+  const [tasks, setTasks] = useState<{ title: string, summary: string }[]>([]);
+  const form = useForm<Form>({
+    initialValues: {
+      title: '',
+      summary: '',
+    },
+    validate: {
+      title: (title) => title.length === 0 ? 'Please input title' : null,
+      summary: (summary) => summary.length === 0 ? 'Please input summary' : null,
+    },
+  });
 
   return (
     <>
@@ -15,12 +28,12 @@ export const Todo = () => {
         <Title order={1}>Todo List</Title>
         <Text c='dimmed'>This is your todo list</Text>
         <List>
-          {tasks.map((item) => {
+          {tasks.map((item, index) => {
             return (
-              <Paper key={item.id} shadow='sm' radius='md' p='lg' mb='xs' withBorder>
+              <Paper key={index} shadow='sm' radius='md' p='lg' mb='xs' withBorder>
                 <Group position='apart'>
                   <Title order={5}>{item.title}</Title>
-                  <ActionIcon onClick={() => setTasks((tasks) => tasks.filter((task) => task.id !== item.id))}>
+                  <ActionIcon onClick={() => setTasks((tasks) => tasks.slice(0, index).concat(tasks.slice(index+1)))}>
                     <BsFillTrashFill color='red'/>
                   </ActionIcon>
                 </Group>
@@ -42,30 +55,35 @@ export const Todo = () => {
         overlayOpacity={0}
         closeOnEscape
       >
-        <Stack>
-          <Title order={4}>New Task</Title>
-          <TextInput placeholder="Task title" label='Title' withAsterisk value={title} onChange={(e) => setTitle(e.currentTarget.value)} />
-          <TextInput placeholder="Task Summary" label='Summary' withAsterisk value={summary} onChange={(e) => setSummary(e.currentTarget.value)} />
-          <Group position='apart'>
-            <Anchor component='button' type='button' onClick={() => {
-              setTitle('');
-              setSummary('');
-              setOpened(false);
-            }}>
-              <Text>cancel</Text>
-            </Anchor>
-            <Button onClick={() => {
-              if (!(title && summary)) return;
-              setTasks((pre) => [...pre, {title, summary, id}]);
-              setTitle('');
-              setSummary('');
-              setId((id) => id + 1);
-              setOpened(false);
-            }}>
-              Create Task
-            </Button>
-          </Group>
-        </Stack>
+        <form 
+          onSubmit={form.onSubmit((value, e) => {
+            e.preventDefault();
+            const result = form.validate();
+            if (result.hasErrors) return;
+            setTasks((tasks) => [...tasks, { ...value }]);
+            form.reset();
+            setOpened(false);
+          })}
+          onReset={(e) => {
+            e.preventDefault();
+            form.reset();
+            setOpened(false);
+          }}
+        >
+          <Stack>
+            <Title order={4}>New Task</Title>
+            <TextInput placeholder="Task title" label='Title' withAsterisk {...form.getInputProps('title')} />
+            <TextInput placeholder="Task Summary" label='Summary' withAsterisk {...form.getInputProps('summary')} />
+            <Group position='apart'>
+              <Anchor component='button' type='reset'>
+                <Text>cancel</Text>
+              </Anchor>
+              <Button type='submit'>
+                Create Task
+              </Button>
+            </Group>
+          </Stack>
+        </form>
       </Modal>
     </>
   );
