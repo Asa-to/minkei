@@ -1,24 +1,37 @@
-import { ActionIcon, Anchor, Button, Modal, Group, List, Paper, Stack, Text, TextInput, Title } from "@mantine/core";
-import { useForm } from "@mantine/form";
-import { useState } from "react";
+import {
+  ActionIcon,
+  Anchor,
+  Button,
+  Modal,
+  Group,
+  List,
+  Paper,
+  Stack,
+  Text,
+  TextInput,
+  Title,
+} from '@mantine/core';
+import { useForm } from '@mantine/form';
+import { useState } from 'react';
 import { BsFillTrashFill } from 'react-icons/bs';
 
 type Form = {
-  title: string,
-  summary: string,
-}
+  title: string;
+  summary: string;
+};
 
 export const Todo = () => {
   const [opened, setOpened] = useState(false);
-  const [tasks, setTasks] = useState<{ title: string, summary: string }[]>([]);
+  const [tasks, setTasks] = useState<{ title: string; summary: string }[]>([]);
   const form = useForm<Form>({
     initialValues: {
       title: '',
       summary: '',
     },
     validate: {
-      title: (title) => title.length === 0 ? 'Please input title' : null,
-      summary: (summary) => summary.length === 0 ? 'Please input summary' : null,
+      title: (title) => (title.length === 0 ? 'Please input title' : null),
+      summary: (summary) =>
+        summary.length === 0 ? 'Please input summary' : null,
     },
   });
 
@@ -30,20 +43,35 @@ export const Todo = () => {
         <List>
           {tasks.map((item, index) => {
             return (
-              <Paper key={index} shadow='sm' radius='md' p='lg' mb='xs' withBorder>
+              <Paper
+                key={index}
+                shadow='sm'
+                radius='md'
+                p='lg'
+                mb='xs'
+                withBorder
+              >
                 <Group position='apart'>
                   <Title order={5}>{item.title}</Title>
-                  <ActionIcon onClick={() => setTasks((tasks) => tasks.slice(0, index).concat(tasks.slice(index+1)))}>
-                    <BsFillTrashFill color='red'/>
+                  <ActionIcon
+                    onClick={() =>
+                      setTasks((tasks) =>
+                        tasks.slice(0, index).concat(tasks.slice(index + 1))
+                      )
+                    }
+                  >
+                    <BsFillTrashFill color='red' />
                   </ActionIcon>
                 </Group>
                 <Text c='dimmed'>{item.summary}</Text>
               </Paper>
-            )
+            );
           })}
         </List>
         <Group>
-          <Button fullWidth onClick={() => setOpened((now) => !now)}>New Task</Button>
+          <Button fullWidth onClick={() => setOpened((now) => !now)}>
+            New Task
+          </Button>
         </Group>
       </Stack>
       <Modal
@@ -55,7 +83,7 @@ export const Todo = () => {
         overlayOpacity={0}
         closeOnEscape
       >
-        <form 
+        <form
           onSubmit={form.onSubmit((value, e) => {
             e.preventDefault();
             const result = form.validate();
@@ -72,15 +100,23 @@ export const Todo = () => {
         >
           <Stack>
             <Title order={4}>New Task</Title>
-            <TextInput placeholder="Task title" label='Title' withAsterisk {...form.getInputProps('title')} />
-            <TextInput placeholder="Task Summary" label='Summary' withAsterisk {...form.getInputProps('summary')} />
+            <TextInput
+              placeholder='Task title'
+              label='Title'
+              withAsterisk
+              {...form.getInputProps('title')}
+            />
+            <TextInput
+              placeholder='Task Summary'
+              label='Summary'
+              withAsterisk
+              {...form.getInputProps('summary')}
+            />
             <Group position='apart'>
               <Anchor component='button' type='reset'>
                 <Text>cancel</Text>
               </Anchor>
-              <Button type='submit'>
-                Create Task
-              </Button>
+              <Button type='submit'>Create Task</Button>
             </Group>
           </Stack>
         </form>

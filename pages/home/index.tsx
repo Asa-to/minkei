@@ -8,23 +8,21 @@ const Home = () => {
     payerId: '111',
     date: new Date(),
     amount: 100,
-  }
+  };
   const moneyRecords = [
     record,
     record,
     record,
     record,
-    {...record, amount: -100},
-    {...record, amount: -100},
-    {...record, amount: -100},
-    {...record, amount: -100},
-    {...record, amount: -100},
-    {...record, amount: -100},
+    { ...record, amount: -100 },
+    { ...record, amount: -100 },
+    { ...record, amount: -100 },
+    { ...record, amount: -100 },
+    { ...record, amount: -100 },
+    { ...record, amount: -100 },
   ];
 
-  return (
-    <LedgerCalendar moneyRecords={moneyRecords} />
-  )
+  return <LedgerCalendar moneyRecords={moneyRecords} />;
 };
 
 export default Home;

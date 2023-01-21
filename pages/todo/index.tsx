@@ -1,8 +1,7 @@
-import { Center } from "@mantine/core";
-import { Todo } from "src/components/molecules/Todo"
+import { Center } from '@mantine/core';
+import { Todo } from 'src/components/molecules/Todo';
 
 const TodoPage = () => {
-
   return (
     <Center>
       <Todo />

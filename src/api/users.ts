@@ -1,8 +1,8 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const USER = gql`
-  query User{
-    user{
+  query User {
+    user {
       name
       id
     }
@@ -11,11 +11,11 @@ export const USER = gql`
 
 export const INSERT_USER = gql`
   mutation INSERT_USER($name: String!) {
-    insert_user(objects: {name: $name}) {
-      returning{
+    insert_user(objects: { name: $name }) {
+      returning {
         id
         name
       }
     }
   }
-`
+`;
