@@ -6,11 +6,15 @@ import {
   Stack,
   useMantineTheme,
 } from '@mantine/core';
-import { useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
-import { INSERT_USER } from 'src/api/users';
-import { useUserLazyQuery } from 'src/gql/types';
+import {
+  useInsertMoneyRecordMutation,
+  useInsertUserMutation,
+  useMoneyRecordLazyQuery,
+  useUserLazyQuery,
+} from 'src/gql/types';
 import { useInputState } from '@mantine/hooks';
+import { Prism } from '@mantine/prism';
 
 const Home = () => {
   const theme = useMantineTheme();
@@ -20,12 +24,18 @@ const Home = () => {
   const [fetchUser, { data: userData, loading: fetchLoading }] =
     useUserLazyQuery();
   const [insertUser, { data: resultData, loading: insertLoading }] =
-    useMutation(INSERT_USER);
+    useInsertUserMutation();
+  const [fetchMoneyRecord, { data: moneyRecord, loading: moneyRecordLoading }] =
+    useMoneyRecordLazyQuery();
+  const [
+    insertMoneyRecord,
+    { data: resultInsertMoneyRecord, loading: insertMoneyRecordLoading },
+  ] = useInsertMoneyRecordMutation();
 
   return (
     // TODO Header追加
     <Center>
-      <Stack>
+      <Stack w={500}>
         <Button
           onClick={() => router.push('/home')}
           variant='gradient'
@@ -56,6 +66,30 @@ const Home = () => {
         >
           get users
         </Button>
+        <Button
+          onClick={() => fetchMoneyRecord()}
+          variant='gradient'
+          gradient={{ from: theme.colors.cyan[0], to: theme.colors.red[6] }}
+          loading={moneyRecordLoading}
+        >
+          fetch money record
+        </Button>
+        <Button
+          onClick={() =>
+            insertMoneyRecord({
+              variables: {
+                title: 'unko',
+                amount: 10000,
+                payer_id: userData?.user[0].id,
+              },
+            })
+          }
+          variant='gradient'
+          gradient={{ from: theme.colors.red[6], to: theme.colors.cyan[0] }}
+          loading={insertMoneyRecordLoading}
+        >
+          insert money record
+        </Button>
         <Input
           value={name}
           onChange={setName}
@@ -77,6 +111,11 @@ const Home = () => {
         <List>
           {userData?.user?.map((user, index) => {
             return <List.Item key={index}>{user?.name}</List.Item>;
+          })}
+        </List>
+        <List>
+          {moneyRecord?.money_records?.map((moneyRecord, index) => {
+            return <Prism language='json'>{JSON.stringify(moneyRecord)}</Prism>;
           })}
         </List>
       </Stack>
