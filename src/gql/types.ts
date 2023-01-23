@@ -64,13 +64,14 @@ export type String_Comparison_Exp = {
 };
 
 /** ordering argument of a cursor */
-export enum Cursor_Ordering {
+export const Cursor_Ordering = {
   /** ascending ordering of the cursor */
-  Asc = 'ASC',
+  Asc: 'ASC',
   /** descending ordering of the cursor */
-  Desc = 'DESC'
-}
+  Desc: 'DESC'
+} as const;
 
+export type Cursor_Ordering = typeof Cursor_Ordering[keyof typeof Cursor_Ordering];
 /** Boolean expression to compare columns of type "date". All fields are combined with logical 'AND'. */
 export type Date_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['date']>;
@@ -86,24 +87,23 @@ export type Date_Comparison_Exp = {
 
 /** 入出金の履歴を保存するテーブル */
 export type Money_Records = {
-  __typename?: 'money_records';
   amount: Scalars['Int'];
   date: Scalars['date'];
   id: Scalars['uuid'];
   payer_id: Scalars['uuid'];
   title: Scalars['String'];
+  /** An object relationship */
+  user: User;
 };
 
 /** aggregated selection of "money_records" */
 export type Money_Records_Aggregate = {
-  __typename?: 'money_records_aggregate';
   aggregate?: Maybe<Money_Records_Aggregate_Fields>;
   nodes: Array<Money_Records>;
 };
 
 /** aggregate fields of "money_records" */
 export type Money_Records_Aggregate_Fields = {
-  __typename?: 'money_records_aggregate_fields';
   avg?: Maybe<Money_Records_Avg_Fields>;
   count: Scalars['Int'];
   max?: Maybe<Money_Records_Max_Fields>;
@@ -126,7 +126,6 @@ export type Money_Records_Aggregate_FieldsCountArgs = {
 
 /** aggregate avg on columns */
 export type Money_Records_Avg_Fields = {
-  __typename?: 'money_records_avg_fields';
   amount?: Maybe<Scalars['Float']>;
 };
 
@@ -140,16 +139,16 @@ export type Money_Records_Bool_Exp = {
   id?: InputMaybe<Uuid_Comparison_Exp>;
   payer_id?: InputMaybe<Uuid_Comparison_Exp>;
   title?: InputMaybe<String_Comparison_Exp>;
+  user?: InputMaybe<User_Bool_Exp>;
 };
 
 /** unique or primary key constraints on table "money_records" */
-export enum Money_Records_Constraint {
-  /** unique or primary key constraint on columns "payer_id" */
-  MoneyRecordsPayerIdKey = 'money_records_payer_id_key',
+export const Money_Records_Constraint = {
   /** unique or primary key constraint on columns "id" */
-  MoneyRecordsPkey = 'money_records_pkey'
-}
+  MoneyRecordsPkey: 'money_records_pkey'
+} as const;
 
+export type Money_Records_Constraint = typeof Money_Records_Constraint[keyof typeof Money_Records_Constraint];
 /** input type for incrementing numeric columns in table "money_records" */
 export type Money_Records_Inc_Input = {
   amount?: InputMaybe<Scalars['Int']>;
@@ -162,11 +161,11 @@ export type Money_Records_Insert_Input = {
   id?: InputMaybe<Scalars['uuid']>;
   payer_id?: InputMaybe<Scalars['uuid']>;
   title?: InputMaybe<Scalars['String']>;
+  user?: InputMaybe<User_Obj_Rel_Insert_Input>;
 };
 
 /** aggregate max on columns */
 export type Money_Records_Max_Fields = {
-  __typename?: 'money_records_max_fields';
   amount?: Maybe<Scalars['Int']>;
   date?: Maybe<Scalars['date']>;
   id?: Maybe<Scalars['uuid']>;
@@ -176,7 +175,6 @@ export type Money_Records_Max_Fields = {
 
 /** aggregate min on columns */
 export type Money_Records_Min_Fields = {
-  __typename?: 'money_records_min_fields';
   amount?: Maybe<Scalars['Int']>;
   date?: Maybe<Scalars['date']>;
   id?: Maybe<Scalars['uuid']>;
@@ -186,7 +184,6 @@ export type Money_Records_Min_Fields = {
 
 /** response of any mutation on the table "money_records" */
 export type Money_Records_Mutation_Response = {
-  __typename?: 'money_records_mutation_response';
   /** number of rows affected by the mutation */
   affected_rows: Scalars['Int'];
   /** data from the rows affected by the mutation */
@@ -207,6 +204,7 @@ export type Money_Records_Order_By = {
   id?: InputMaybe<Order_By>;
   payer_id?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
+  user?: InputMaybe<User_Order_By>;
 };
 
 /** primary key columns input for table: money_records */
@@ -215,19 +213,20 @@ export type Money_Records_Pk_Columns_Input = {
 };
 
 /** select columns of table "money_records" */
-export enum Money_Records_Select_Column {
+export const Money_Records_Select_Column = {
   /** column name */
-  Amount = 'amount',
+  Amount: 'amount',
   /** column name */
-  Date = 'date',
+  Date: 'date',
   /** column name */
-  Id = 'id',
+  Id: 'id',
   /** column name */
-  PayerId = 'payer_id',
+  PayerId: 'payer_id',
   /** column name */
-  Title = 'title'
-}
+  Title: 'title'
+} as const;
 
+export type Money_Records_Select_Column = typeof Money_Records_Select_Column[keyof typeof Money_Records_Select_Column];
 /** input type for updating data in table "money_records" */
 export type Money_Records_Set_Input = {
   amount?: InputMaybe<Scalars['Int']>;
@@ -239,19 +238,16 @@ export type Money_Records_Set_Input = {
 
 /** aggregate stddev on columns */
 export type Money_Records_Stddev_Fields = {
-  __typename?: 'money_records_stddev_fields';
   amount?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate stddev_pop on columns */
 export type Money_Records_Stddev_Pop_Fields = {
-  __typename?: 'money_records_stddev_pop_fields';
   amount?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate stddev_samp on columns */
 export type Money_Records_Stddev_Samp_Fields = {
-  __typename?: 'money_records_stddev_samp_fields';
   amount?: Maybe<Scalars['Float']>;
 };
 
@@ -274,24 +270,24 @@ export type Money_Records_Stream_Cursor_Value_Input = {
 
 /** aggregate sum on columns */
 export type Money_Records_Sum_Fields = {
-  __typename?: 'money_records_sum_fields';
   amount?: Maybe<Scalars['Int']>;
 };
 
 /** update columns of table "money_records" */
-export enum Money_Records_Update_Column {
+export const Money_Records_Update_Column = {
   /** column name */
-  Amount = 'amount',
+  Amount: 'amount',
   /** column name */
-  Date = 'date',
+  Date: 'date',
   /** column name */
-  Id = 'id',
+  Id: 'id',
   /** column name */
-  PayerId = 'payer_id',
+  PayerId: 'payer_id',
   /** column name */
-  Title = 'title'
-}
+  Title: 'title'
+} as const;
 
+export type Money_Records_Update_Column = typeof Money_Records_Update_Column[keyof typeof Money_Records_Update_Column];
 export type Money_Records_Updates = {
   /** increments the numeric columns with given value of the filtered values */
   _inc?: InputMaybe<Money_Records_Inc_Input>;
@@ -303,25 +299,21 @@ export type Money_Records_Updates = {
 
 /** aggregate var_pop on columns */
 export type Money_Records_Var_Pop_Fields = {
-  __typename?: 'money_records_var_pop_fields';
   amount?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate var_samp on columns */
 export type Money_Records_Var_Samp_Fields = {
-  __typename?: 'money_records_var_samp_fields';
   amount?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate variance on columns */
 export type Money_Records_Variance_Fields = {
-  __typename?: 'money_records_variance_fields';
   amount?: Maybe<Scalars['Float']>;
 };
 
 /** mutation root */
 export type Mutation_Root = {
-  __typename?: 'mutation_root';
   /** delete data from the table: "money_records" */
   delete_money_records?: Maybe<Money_Records_Mutation_Response>;
   /** delete single row from the table: "money_records" */
@@ -447,23 +439,23 @@ export type Mutation_RootUpdate_User_ManyArgs = {
 };
 
 /** column ordering options */
-export enum Order_By {
+export const Order_By = {
   /** in ascending order, nulls last */
-  Asc = 'asc',
+  Asc: 'asc',
   /** in ascending order, nulls first */
-  AscNullsFirst = 'asc_nulls_first',
+  AscNullsFirst: 'asc_nulls_first',
   /** in ascending order, nulls last */
-  AscNullsLast = 'asc_nulls_last',
+  AscNullsLast: 'asc_nulls_last',
   /** in descending order, nulls first */
-  Desc = 'desc',
+  Desc: 'desc',
   /** in descending order, nulls first */
-  DescNullsFirst = 'desc_nulls_first',
+  DescNullsFirst: 'desc_nulls_first',
   /** in descending order, nulls last */
-  DescNullsLast = 'desc_nulls_last'
-}
+  DescNullsLast: 'desc_nulls_last'
+} as const;
 
+export type Order_By = typeof Order_By[keyof typeof Order_By];
 export type Query_Root = {
-  __typename?: 'query_root';
   /** fetch data from the table: "money_records" */
   money_records: Array<Money_Records>;
   /** fetch aggregated fields from the table: "money_records" */
@@ -525,7 +517,6 @@ export type Query_RootUser_By_PkArgs = {
 };
 
 export type Subscription_Root = {
-  __typename?: 'subscription_root';
   /** fetch data from the table: "money_records" */
   money_records: Array<Money_Records>;
   /** fetch aggregated fields from the table: "money_records" */
@@ -606,21 +597,18 @@ export type Subscription_RootUser_StreamArgs = {
 
 /**  ユーザー情報 */
 export type User = {
-  __typename?: 'user';
   id: Scalars['uuid'];
   name: Scalars['String'];
 };
 
 /** aggregated selection of "user" */
 export type User_Aggregate = {
-  __typename?: 'user_aggregate';
   aggregate?: Maybe<User_Aggregate_Fields>;
   nodes: Array<User>;
 };
 
 /** aggregate fields of "user" */
 export type User_Aggregate_Fields = {
-  __typename?: 'user_aggregate_fields';
   count: Scalars['Int'];
   max?: Maybe<User_Max_Fields>;
   min?: Maybe<User_Min_Fields>;
@@ -643,13 +631,14 @@ export type User_Bool_Exp = {
 };
 
 /** unique or primary key constraints on table "user" */
-export enum User_Constraint {
+export const User_Constraint = {
   /** unique or primary key constraint on columns "id" */
-  UserIdKey = 'user_id_key',
+  UserIdKey: 'user_id_key',
   /** unique or primary key constraint on columns "id" */
-  UserPkey = 'user_pkey'
-}
+  UserPkey: 'user_pkey'
+} as const;
 
+export type User_Constraint = typeof User_Constraint[keyof typeof User_Constraint];
 /** input type for inserting data into table "user" */
 export type User_Insert_Input = {
   id?: InputMaybe<Scalars['uuid']>;
@@ -658,25 +647,29 @@ export type User_Insert_Input = {
 
 /** aggregate max on columns */
 export type User_Max_Fields = {
-  __typename?: 'user_max_fields';
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
 };
 
 /** aggregate min on columns */
 export type User_Min_Fields = {
-  __typename?: 'user_min_fields';
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
 };
 
 /** response of any mutation on the table "user" */
 export type User_Mutation_Response = {
-  __typename?: 'user_mutation_response';
   /** number of rows affected by the mutation */
   affected_rows: Scalars['Int'];
   /** data from the rows affected by the mutation */
   returning: Array<User>;
+};
+
+/** input type for inserting object relation for remote table "user" */
+export type User_Obj_Rel_Insert_Input = {
+  data: User_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<User_On_Conflict>;
 };
 
 /** on_conflict condition type for table "user" */
@@ -698,13 +691,14 @@ export type User_Pk_Columns_Input = {
 };
 
 /** select columns of table "user" */
-export enum User_Select_Column {
+export const User_Select_Column = {
   /** column name */
-  Id = 'id',
+  Id: 'id',
   /** column name */
-  Name = 'name'
-}
+  Name: 'name'
+} as const;
 
+export type User_Select_Column = typeof User_Select_Column[keyof typeof User_Select_Column];
 /** input type for updating data in table "user" */
 export type User_Set_Input = {
   id?: InputMaybe<Scalars['uuid']>;
@@ -726,13 +720,14 @@ export type User_Stream_Cursor_Value_Input = {
 };
 
 /** update columns of table "user" */
-export enum User_Update_Column {
+export const User_Update_Column = {
   /** column name */
-  Id = 'id',
+  Id: 'id',
   /** column name */
-  Name = 'name'
-}
+  Name: 'name'
+} as const;
 
+export type User_Update_Column = typeof User_Update_Column[keyof typeof User_Update_Column];
 export type User_Updates = {
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<User_Set_Input>;
@@ -753,19 +748,229 @@ export type Uuid_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['uuid']>>;
 };
 
+export type MoneyRecordQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MoneyRecordQuery = { money_records: Array<{ amount: number, date: any, id: any, payer_id: any, title: string, user: { id: any, name: string } }> };
+
+export type InsertMoneyRecordMutationVariables = Exact<{
+  amount: Scalars['Int'];
+  payer_id: Scalars['uuid'];
+  title: Scalars['String'];
+}>;
+
+
+export type InsertMoneyRecordMutation = { insert_money_records?: { returning: Array<{ amount: number, date: any, id: any, payer_id: any, title: string }> } | null };
+
+export type UpdateMoneyRecordMutationVariables = Exact<{
+  amount?: InputMaybe<Scalars['Int']>;
+  date?: InputMaybe<Scalars['date']>;
+  payer_id?: InputMaybe<Scalars['uuid']>;
+  title?: InputMaybe<Scalars['String']>;
+  _eq?: InputMaybe<Scalars['uuid']>;
+}>;
+
+
+export type UpdateMoneyRecordMutation = { update_money_records?: { returning: Array<{ amount: number, date: any, id: any, payer_id: any, title: string, user: { id: any, name: string } }> } | null };
+
+export type DeleteMoneyRecordMutationVariables = Exact<{
+  _eq: Scalars['uuid'];
+}>;
+
+
+export type DeleteMoneyRecordMutation = { delete_money_records?: { returning: Array<{ id: any, payer_id: any }> } | null };
+
 export type UserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserQuery = { __typename?: 'query_root', user: Array<{ __typename?: 'user', name: string, id: any }> };
+export type UserQuery = { user: Array<{ name: string, id: any }> };
 
-export type Insert_UserMutationVariables = Exact<{
+export type InsertUserMutationVariables = Exact<{
   name: Scalars['String'];
 }>;
 
 
-export type Insert_UserMutation = { __typename?: 'mutation_root', insert_user?: { __typename?: 'user_mutation_response', returning: Array<{ __typename?: 'user', id: any, name: string }> } | null };
+export type InsertUserMutation = { insert_user?: { returning: Array<{ id: any, name: string }> } | null };
+
+export type MyMutationMutationVariables = Exact<{
+  _eq?: InputMaybe<Scalars['uuid']>;
+}>;
 
 
+export type MyMutationMutation = { delete_user?: { returning: Array<{ id: any, name: string }> } | null };
+
+
+export const MoneyRecordDocument = gql`
+    query MoneyRecord {
+  money_records {
+    amount
+    date
+    id
+    payer_id
+    title
+    user {
+      id
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useMoneyRecordQuery__
+ *
+ * To run a query within a React component, call `useMoneyRecordQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMoneyRecordQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMoneyRecordQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMoneyRecordQuery(baseOptions?: Apollo.QueryHookOptions<MoneyRecordQuery, MoneyRecordQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MoneyRecordQuery, MoneyRecordQueryVariables>(MoneyRecordDocument, options);
+      }
+export function useMoneyRecordLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MoneyRecordQuery, MoneyRecordQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MoneyRecordQuery, MoneyRecordQueryVariables>(MoneyRecordDocument, options);
+        }
+export type MoneyRecordQueryHookResult = ReturnType<typeof useMoneyRecordQuery>;
+export type MoneyRecordLazyQueryHookResult = ReturnType<typeof useMoneyRecordLazyQuery>;
+export type MoneyRecordQueryResult = Apollo.QueryResult<MoneyRecordQuery, MoneyRecordQueryVariables>;
+export const InsertMoneyRecordDocument = gql`
+    mutation InsertMoneyRecord($amount: Int!, $payer_id: uuid!, $title: String!) {
+  insert_money_records(
+    objects: {payer_id: $payer_id, title: $title, amount: $amount}
+  ) {
+    returning {
+      amount
+      date
+      id
+      payer_id
+      title
+    }
+  }
+}
+    `;
+export type InsertMoneyRecordMutationFn = Apollo.MutationFunction<InsertMoneyRecordMutation, InsertMoneyRecordMutationVariables>;
+
+/**
+ * __useInsertMoneyRecordMutation__
+ *
+ * To run a mutation, you first call `useInsertMoneyRecordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertMoneyRecordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertMoneyRecordMutation, { data, loading, error }] = useInsertMoneyRecordMutation({
+ *   variables: {
+ *      amount: // value for 'amount'
+ *      payer_id: // value for 'payer_id'
+ *      title: // value for 'title'
+ *   },
+ * });
+ */
+export function useInsertMoneyRecordMutation(baseOptions?: Apollo.MutationHookOptions<InsertMoneyRecordMutation, InsertMoneyRecordMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<InsertMoneyRecordMutation, InsertMoneyRecordMutationVariables>(InsertMoneyRecordDocument, options);
+      }
+export type InsertMoneyRecordMutationHookResult = ReturnType<typeof useInsertMoneyRecordMutation>;
+export type InsertMoneyRecordMutationResult = Apollo.MutationResult<InsertMoneyRecordMutation>;
+export type InsertMoneyRecordMutationOptions = Apollo.BaseMutationOptions<InsertMoneyRecordMutation, InsertMoneyRecordMutationVariables>;
+export const UpdateMoneyRecordDocument = gql`
+    mutation UpdateMoneyRecord($amount: Int, $date: date, $payer_id: uuid, $title: String, $_eq: uuid) {
+  update_money_records(
+    _set: {amount: $amount, date: $date, payer_id: $payer_id, title: $title}
+    where: {id: {_eq: $_eq}}
+  ) {
+    returning {
+      amount
+      date
+      id
+      payer_id
+      title
+      user {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+export type UpdateMoneyRecordMutationFn = Apollo.MutationFunction<UpdateMoneyRecordMutation, UpdateMoneyRecordMutationVariables>;
+
+/**
+ * __useUpdateMoneyRecordMutation__
+ *
+ * To run a mutation, you first call `useUpdateMoneyRecordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateMoneyRecordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateMoneyRecordMutation, { data, loading, error }] = useUpdateMoneyRecordMutation({
+ *   variables: {
+ *      amount: // value for 'amount'
+ *      date: // value for 'date'
+ *      payer_id: // value for 'payer_id'
+ *      title: // value for 'title'
+ *      _eq: // value for '_eq'
+ *   },
+ * });
+ */
+export function useUpdateMoneyRecordMutation(baseOptions?: Apollo.MutationHookOptions<UpdateMoneyRecordMutation, UpdateMoneyRecordMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateMoneyRecordMutation, UpdateMoneyRecordMutationVariables>(UpdateMoneyRecordDocument, options);
+      }
+export type UpdateMoneyRecordMutationHookResult = ReturnType<typeof useUpdateMoneyRecordMutation>;
+export type UpdateMoneyRecordMutationResult = Apollo.MutationResult<UpdateMoneyRecordMutation>;
+export type UpdateMoneyRecordMutationOptions = Apollo.BaseMutationOptions<UpdateMoneyRecordMutation, UpdateMoneyRecordMutationVariables>;
+export const DeleteMoneyRecordDocument = gql`
+    mutation DeleteMoneyRecord($_eq: uuid!) {
+  delete_money_records(where: {id: {_eq: $_eq}}) {
+    returning {
+      id
+      payer_id
+    }
+  }
+}
+    `;
+export type DeleteMoneyRecordMutationFn = Apollo.MutationFunction<DeleteMoneyRecordMutation, DeleteMoneyRecordMutationVariables>;
+
+/**
+ * __useDeleteMoneyRecordMutation__
+ *
+ * To run a mutation, you first call `useDeleteMoneyRecordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteMoneyRecordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteMoneyRecordMutation, { data, loading, error }] = useDeleteMoneyRecordMutation({
+ *   variables: {
+ *      _eq: // value for '_eq'
+ *   },
+ * });
+ */
+export function useDeleteMoneyRecordMutation(baseOptions?: Apollo.MutationHookOptions<DeleteMoneyRecordMutation, DeleteMoneyRecordMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteMoneyRecordMutation, DeleteMoneyRecordMutationVariables>(DeleteMoneyRecordDocument, options);
+      }
+export type DeleteMoneyRecordMutationHookResult = ReturnType<typeof useDeleteMoneyRecordMutation>;
+export type DeleteMoneyRecordMutationResult = Apollo.MutationResult<DeleteMoneyRecordMutation>;
+export type DeleteMoneyRecordMutationOptions = Apollo.BaseMutationOptions<DeleteMoneyRecordMutation, DeleteMoneyRecordMutationVariables>;
 export const UserDocument = gql`
     query User {
   user {
@@ -801,8 +1006,8 @@ export function useUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserQ
 export type UserQueryHookResult = ReturnType<typeof useUserQuery>;
 export type UserLazyQueryHookResult = ReturnType<typeof useUserLazyQuery>;
 export type UserQueryResult = Apollo.QueryResult<UserQuery, UserQueryVariables>;
-export const Insert_UserDocument = gql`
-    mutation INSERT_USER($name: String!) {
+export const InsertUserDocument = gql`
+    mutation InsertUser($name: String!) {
   insert_user(objects: {name: $name}) {
     returning {
       id
@@ -811,29 +1016,65 @@ export const Insert_UserDocument = gql`
   }
 }
     `;
-export type Insert_UserMutationFn = Apollo.MutationFunction<Insert_UserMutation, Insert_UserMutationVariables>;
+export type InsertUserMutationFn = Apollo.MutationFunction<InsertUserMutation, InsertUserMutationVariables>;
 
 /**
- * __useInsert_UserMutation__
+ * __useInsertUserMutation__
  *
- * To run a mutation, you first call `useInsert_UserMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useInsert_UserMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useInsertUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertUserMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [insertUserMutation, { data, loading, error }] = useInsert_UserMutation({
+ * const [insertUserMutation, { data, loading, error }] = useInsertUserMutation({
  *   variables: {
  *      name: // value for 'name'
  *   },
  * });
  */
-export function useInsert_UserMutation(baseOptions?: Apollo.MutationHookOptions<Insert_UserMutation, Insert_UserMutationVariables>) {
+export function useInsertUserMutation(baseOptions?: Apollo.MutationHookOptions<InsertUserMutation, InsertUserMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<Insert_UserMutation, Insert_UserMutationVariables>(Insert_UserDocument, options);
+        return Apollo.useMutation<InsertUserMutation, InsertUserMutationVariables>(InsertUserDocument, options);
       }
-export type Insert_UserMutationHookResult = ReturnType<typeof useInsert_UserMutation>;
-export type Insert_UserMutationResult = Apollo.MutationResult<Insert_UserMutation>;
-export type Insert_UserMutationOptions = Apollo.BaseMutationOptions<Insert_UserMutation, Insert_UserMutationVariables>;
+export type InsertUserMutationHookResult = ReturnType<typeof useInsertUserMutation>;
+export type InsertUserMutationResult = Apollo.MutationResult<InsertUserMutation>;
+export type InsertUserMutationOptions = Apollo.BaseMutationOptions<InsertUserMutation, InsertUserMutationVariables>;
+export const MyMutationDocument = gql`
+    mutation MyMutation($_eq: uuid) {
+  delete_user(where: {id: {_eq: $_eq}}) {
+    returning {
+      id
+      name
+    }
+  }
+}
+    `;
+export type MyMutationMutationFn = Apollo.MutationFunction<MyMutationMutation, MyMutationMutationVariables>;
+
+/**
+ * __useMyMutationMutation__
+ *
+ * To run a mutation, you first call `useMyMutationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useMyMutationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [myMutationMutation, { data, loading, error }] = useMyMutationMutation({
+ *   variables: {
+ *      _eq: // value for '_eq'
+ *   },
+ * });
+ */
+export function useMyMutationMutation(baseOptions?: Apollo.MutationHookOptions<MyMutationMutation, MyMutationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<MyMutationMutation, MyMutationMutationVariables>(MyMutationDocument, options);
+      }
+export type MyMutationMutationHookResult = ReturnType<typeof useMyMutationMutation>;
+export type MyMutationMutationResult = Apollo.MutationResult<MyMutationMutation>;
+export type MyMutationMutationOptions = Apollo.BaseMutationOptions<MyMutationMutation, MyMutationMutationVariables>;
