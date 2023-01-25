@@ -16,7 +16,7 @@ import { BsCalculator, BsFileEarmarkText } from 'react-icons/bs';
 export type FormData = {
   date: Date;
   money: number;
-  item: string;
+  title: string;
 };
 
 type Props = {
@@ -33,14 +33,14 @@ export const InputForm = ({ onSubmit, onCancel, selectedDate }: Props) => {
     initialValues: {
       date: selectedDate,
       money: undefined,
-      item: '',
+      title: '',
       switch: false,
     },
     validate: {
       date: (date) => (date ? null : 'please select date'),
       money: (money) =>
         typeof money !== 'number' ? 'please input number' : null,
-      item: (item) => (item.length === 0 ? 'please input text' : null),
+      title: (title) => (title.length === 0 ? 'please input title' : null),
     },
   });
 
@@ -80,6 +80,12 @@ export const InputForm = ({ onSubmit, onCancel, selectedDate }: Props) => {
           withAsterisk
           {...form.getInputProps('date')}
         />
+        <TextInput
+          icon={<BsFileEarmarkText />}
+          label='タイトル'
+          withAsterisk
+          {...form.getInputProps('item')}
+        />
         <NumberInput
           icon={
             <BsCalculator
@@ -95,12 +101,6 @@ export const InputForm = ({ onSubmit, onCancel, selectedDate }: Props) => {
           }}
           withAsterisk
           {...form.getInputProps('money')}
-        />
-        <TextInput
-          icon={<BsFileEarmarkText />}
-          label='項目'
-          withAsterisk
-          {...form.getInputProps('item')}
         />
         <Group>
           <Button component='button' type='reset'>
