@@ -15,6 +15,9 @@ import {
 } from 'src/gql/types';
 import { useInputState } from '@mantine/hooks';
 import { Prism } from '@mantine/prism';
+import { InputForm } from 'src/components/molecules/InputModal/inputForm';
+import { InputModal } from 'src/components/molecules/InputModal';
+import { useState } from 'react';
 
 const Home = () => {
   const theme = useMantineTheme();
@@ -31,6 +34,7 @@ const Home = () => {
     insertMoneyRecord,
     { data: resultInsertMoneyRecord, loading: insertMoneyRecordLoading },
   ] = useInsertMoneyRecordMutation();
+  const [open, setOpen] = useState(false);
 
   return (
     // TODO Header追加
@@ -108,6 +112,15 @@ const Home = () => {
         >
           insert users
         </Button>
+        <Button
+          onClick={() => {
+            setOpen(true);
+          }}
+          variant='gradient'
+          gradient={{ from: theme.colors.red[6], to: theme.colors.cyan[0] }}
+        >
+          openModal
+        </Button>
         <List>
           {userData?.user?.map((user, index) => {
             return <List.Item key={index}>{user?.name}</List.Item>;
@@ -118,6 +131,19 @@ const Home = () => {
             return <Prism language='json'>{JSON.stringify(moneyRecord)}</Prism>;
           })}
         </List>
+        <InputModal
+          open={open}
+          onClose={() => {
+            setOpen(false);
+          }}
+          onCancel={() => {
+            setOpen(false);
+          }}
+          selectedDate={new Date()}
+          onSubmit={() => {
+            setOpen(false);
+          }}
+        />
       </Stack>
     </Center>
   );
