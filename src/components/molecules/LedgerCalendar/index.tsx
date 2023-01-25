@@ -1,21 +1,21 @@
 import { Stack, Text, useMantineTheme } from '@mantine/core';
-import { Calendar, isSameDate, isSameMonth } from '@mantine/dates';
+import { Calendar, isSameMonth } from '@mantine/dates';
 import { useState } from 'react';
 import 'dayjs/locale/ja';
-import { MoneyRecord } from 'src/types/moneyRecord';
 import { getTotalFeeOfDay } from './util';
+import { Money_Records } from 'src/gql/types';
 
 type Props = {
-  moneyRecords: MoneyRecord[];
+  moneyRecords: Money_Records[];
+  moneyFetching: boolean;
 };
 
-// TODO tailwindで装飾
 export const LedgerCalendar = (props: Props) => {
   const { moneyRecords } = props;
   const [date, setDate] = useState<Date | null>(new Date());
   // 表示中の月のデータを抜き出す
   const curMonthRecords = moneyRecords.filter((record) =>
-    date ? isSameMonth(record.date, date) : false
+    date ? isSameMonth(new Date(record.date), date) : false
   );
   const theme = useMantineTheme();
 
