@@ -1,28 +1,30 @@
 import 'dayjs/locale/ja';
 import { LedgerCalendar } from 'src/components/molecules/LedgerCalendar';
-import { MoneyRecord } from 'src/types/moneyRecord';
+import { useMoneyRecordLazyQuery, useMoneyRecordQuery } from 'src/gql/types';
 
 const Home = () => {
-  const record: MoneyRecord = {
-    title: 'test',
-    payerId: '111',
-    date: new Date(),
-    amount: 100,
-  };
-  const moneyRecords = [
-    record,
-    record,
-    record,
-    record,
-    { ...record, amount: -100 },
-    { ...record, amount: -100 },
-    { ...record, amount: -100 },
-    { ...record, amount: -100 },
-    { ...record, amount: -100 },
-    { ...record, amount: -100 },
-  ];
+  const [
+    fetchMoney,
+    { data: moneyData, loading: moneyLoading, error: moneyError },
+  ] = useMoneyRecordLazyQuery();
+  const {
+    data: initialMoney,
+    loading: initMoneyLoading,
+    error: initMoneyError,
+  } = useMoneyRecordQuery();
 
-  return <LedgerCalendar moneyRecords={moneyRecords} />;
+  const moneyRecords =
+    moneyData?.money_records ?? initialMoney?.money_records ?? [];
+  const moneyFetching = moneyLoading || initMoneyLoading;
+
+  // GraphQLエラーをキャッチ
+  if (moneyError || initMoneyError) {
+    return <></>;
+  }
+
+  return (
+    <LedgerCalendar moneyRecords={moneyRecords} moneyFetching={moneyFetching} />
+  );
 };
 
 export default Home;
