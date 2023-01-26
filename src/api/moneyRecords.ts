@@ -17,9 +17,19 @@ export const MONEY_RECORD = gql`
 `;
 
 export const INSERT_MONEY_RECORD = gql`
-  mutation InsertMoneyRecord($amount: Int!, $payer_id: uuid!, $title: String!) {
+  mutation InsertMoneyRecord(
+    $amount: Int!
+    $payer_id: uuid!
+    $title: String!
+    $date: timestamptz!
+  ) {
     insert_money_records(
-      objects: { payer_id: $payer_id, title: $title, amount: $amount }
+      objects: {
+        payer_id: $payer_id
+        title: $title
+        amount: $amount
+        date: $date
+      }
     ) {
       returning {
         amount
@@ -35,7 +45,7 @@ export const INSERT_MONEY_RECORD = gql`
 export const UPDATE_MONEY_RECORD = gql`
   mutation UpdateMoneyRecord(
     $amount: Int
-    $date: date
+    $date: timestamptz
     $payer_id: uuid
     $title: String
     $_eq: uuid
