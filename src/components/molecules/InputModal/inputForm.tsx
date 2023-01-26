@@ -19,13 +19,17 @@ export type FormData = {
   title: string;
 };
 
-type Props = {
-  onSubmit: (data?: FormData) => void;
-  selectedDate: Date;
+export type Props = {
+  onSubmit: ({ date, money, title }: FormData) => void;
+  selectedDate?: Date;
   onCancel?: () => void;
 };
 
-export const InputForm = ({ onSubmit, onCancel, selectedDate }: Props) => {
+export const InputForm = ({
+  onSubmit,
+  onCancel,
+  selectedDate = new Date(),
+}: Props) => {
   const theme = useMantineTheme();
   const red = theme.colors.red[6];
   const blue = theme.colors.blue[6];
@@ -50,7 +54,10 @@ export const InputForm = ({ onSubmit, onCancel, selectedDate }: Props) => {
         e.preventDefault();
         if (form.validate().hasErrors) return;
         form.reset();
-        onSubmit({ ...form.values, money: form.values.money ?? 0 });
+        onSubmit({
+          ...form.values,
+          money: (form.values.money ?? 0) * (form.values.switch ? 1 : -1),
+        });
       }}
       onReset={() => {
         onCancel && onCancel();
@@ -84,7 +91,7 @@ export const InputForm = ({ onSubmit, onCancel, selectedDate }: Props) => {
           icon={<BsFileEarmarkText />}
           label='タイトル'
           withAsterisk
-          {...form.getInputProps('item')}
+          {...form.getInputProps('title')}
         />
         <NumberInput
           icon={
