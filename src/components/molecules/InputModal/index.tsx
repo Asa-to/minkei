@@ -1,21 +1,15 @@
 import { Modal } from '@mantine/core';
-import { FormData, InputForm } from './inputForm';
+import { Children } from 'react';
+import { InputForm } from './inputForm';
+import { Props as FormProps } from './inputForm';
 
 type Props = {
   open: boolean;
   onClose: () => void;
-  onSubmit: ({ date, money, item }?: FormData) => void;
-  selectedDate: Date;
-  onCancel?: () => void;
+  children: JSX.Element;
 };
 
-export const InputModal = ({
-  open,
-  onClose,
-  onSubmit,
-  onCancel,
-  selectedDate,
-}: Props) => {
+export const InputModal = ({ open, onClose, children }: Props) => {
   return (
     <Modal
       opened={open}
@@ -23,11 +17,7 @@ export const InputModal = ({
       withCloseButton={false}
       exitTransitionDuration={500}
     >
-      <InputForm
-        onSubmit={onSubmit}
-        onCancel={onCancel}
-        selectedDate={selectedDate}
-      />
+      {children}
     </Modal>
   );
 };
