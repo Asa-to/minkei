@@ -13,7 +13,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  date: any;
+  timestamptz: any;
   uuid: any;
 };
 
@@ -72,23 +72,10 @@ export const Cursor_Ordering = {
 } as const;
 
 export type Cursor_Ordering = typeof Cursor_Ordering[keyof typeof Cursor_Ordering];
-/** Boolean expression to compare columns of type "date". All fields are combined with logical 'AND'. */
-export type Date_Comparison_Exp = {
-  _eq?: InputMaybe<Scalars['date']>;
-  _gt?: InputMaybe<Scalars['date']>;
-  _gte?: InputMaybe<Scalars['date']>;
-  _in?: InputMaybe<Array<Scalars['date']>>;
-  _is_null?: InputMaybe<Scalars['Boolean']>;
-  _lt?: InputMaybe<Scalars['date']>;
-  _lte?: InputMaybe<Scalars['date']>;
-  _neq?: InputMaybe<Scalars['date']>;
-  _nin?: InputMaybe<Array<Scalars['date']>>;
-};
-
 /** 入出金の履歴を保存するテーブル */
 export type Money_Records = {
   amount: Scalars['Int'];
-  date: Scalars['date'];
+  date: Scalars['timestamptz'];
   id: Scalars['uuid'];
   payer_id: Scalars['uuid'];
   title: Scalars['String'];
@@ -135,7 +122,7 @@ export type Money_Records_Bool_Exp = {
   _not?: InputMaybe<Money_Records_Bool_Exp>;
   _or?: InputMaybe<Array<Money_Records_Bool_Exp>>;
   amount?: InputMaybe<Int_Comparison_Exp>;
-  date?: InputMaybe<Date_Comparison_Exp>;
+  date?: InputMaybe<Timestamptz_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   payer_id?: InputMaybe<Uuid_Comparison_Exp>;
   title?: InputMaybe<String_Comparison_Exp>;
@@ -157,7 +144,7 @@ export type Money_Records_Inc_Input = {
 /** input type for inserting data into table "money_records" */
 export type Money_Records_Insert_Input = {
   amount?: InputMaybe<Scalars['Int']>;
-  date?: InputMaybe<Scalars['date']>;
+  date?: InputMaybe<Scalars['timestamptz']>;
   id?: InputMaybe<Scalars['uuid']>;
   payer_id?: InputMaybe<Scalars['uuid']>;
   title?: InputMaybe<Scalars['String']>;
@@ -167,7 +154,7 @@ export type Money_Records_Insert_Input = {
 /** aggregate max on columns */
 export type Money_Records_Max_Fields = {
   amount?: Maybe<Scalars['Int']>;
-  date?: Maybe<Scalars['date']>;
+  date?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['uuid']>;
   payer_id?: Maybe<Scalars['uuid']>;
   title?: Maybe<Scalars['String']>;
@@ -176,7 +163,7 @@ export type Money_Records_Max_Fields = {
 /** aggregate min on columns */
 export type Money_Records_Min_Fields = {
   amount?: Maybe<Scalars['Int']>;
-  date?: Maybe<Scalars['date']>;
+  date?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['uuid']>;
   payer_id?: Maybe<Scalars['uuid']>;
   title?: Maybe<Scalars['String']>;
@@ -230,7 +217,7 @@ export type Money_Records_Select_Column = typeof Money_Records_Select_Column[key
 /** input type for updating data in table "money_records" */
 export type Money_Records_Set_Input = {
   amount?: InputMaybe<Scalars['Int']>;
-  date?: InputMaybe<Scalars['date']>;
+  date?: InputMaybe<Scalars['timestamptz']>;
   id?: InputMaybe<Scalars['uuid']>;
   payer_id?: InputMaybe<Scalars['uuid']>;
   title?: InputMaybe<Scalars['String']>;
@@ -262,7 +249,7 @@ export type Money_Records_Stream_Cursor_Input = {
 /** Initial value of the column from where the streaming should start */
 export type Money_Records_Stream_Cursor_Value_Input = {
   amount?: InputMaybe<Scalars['Int']>;
-  date?: InputMaybe<Scalars['date']>;
+  date?: InputMaybe<Scalars['timestamptz']>;
   id?: InputMaybe<Scalars['uuid']>;
   payer_id?: InputMaybe<Scalars['uuid']>;
   title?: InputMaybe<Scalars['String']>;
@@ -595,6 +582,19 @@ export type Subscription_RootUser_StreamArgs = {
   where?: InputMaybe<User_Bool_Exp>;
 };
 
+/** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
+export type Timestamptz_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['timestamptz']>;
+  _gt?: InputMaybe<Scalars['timestamptz']>;
+  _gte?: InputMaybe<Scalars['timestamptz']>;
+  _in?: InputMaybe<Array<Scalars['timestamptz']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _lt?: InputMaybe<Scalars['timestamptz']>;
+  _lte?: InputMaybe<Scalars['timestamptz']>;
+  _neq?: InputMaybe<Scalars['timestamptz']>;
+  _nin?: InputMaybe<Array<Scalars['timestamptz']>>;
+};
+
 /**  ユーザー情報 */
 export type User = {
   id: Scalars['uuid'];
@@ -757,6 +757,7 @@ export type InsertMoneyRecordMutationVariables = Exact<{
   amount: Scalars['Int'];
   payer_id: Scalars['uuid'];
   title: Scalars['String'];
+  date: Scalars['timestamptz'];
 }>;
 
 
@@ -764,7 +765,7 @@ export type InsertMoneyRecordMutation = { insert_money_records?: { returning: Ar
 
 export type UpdateMoneyRecordMutationVariables = Exact<{
   amount?: InputMaybe<Scalars['Int']>;
-  date?: InputMaybe<Scalars['date']>;
+  date?: InputMaybe<Scalars['timestamptz']>;
   payer_id?: InputMaybe<Scalars['uuid']>;
   title?: InputMaybe<Scalars['String']>;
   _eq?: InputMaybe<Scalars['uuid']>;
@@ -843,9 +844,9 @@ export type MoneyRecordQueryHookResult = ReturnType<typeof useMoneyRecordQuery>;
 export type MoneyRecordLazyQueryHookResult = ReturnType<typeof useMoneyRecordLazyQuery>;
 export type MoneyRecordQueryResult = Apollo.QueryResult<MoneyRecordQuery, MoneyRecordQueryVariables>;
 export const InsertMoneyRecordDocument = gql`
-    mutation InsertMoneyRecord($amount: Int!, $payer_id: uuid!, $title: String!) {
+    mutation InsertMoneyRecord($amount: Int!, $payer_id: uuid!, $title: String!, $date: timestamptz!) {
   insert_money_records(
-    objects: {payer_id: $payer_id, title: $title, amount: $amount}
+    objects: {payer_id: $payer_id, title: $title, amount: $amount, date: $date}
   ) {
     returning {
       amount
@@ -875,6 +876,7 @@ export type InsertMoneyRecordMutationFn = Apollo.MutationFunction<InsertMoneyRec
  *      amount: // value for 'amount'
  *      payer_id: // value for 'payer_id'
  *      title: // value for 'title'
+ *      date: // value for 'date'
  *   },
  * });
  */
@@ -886,7 +888,7 @@ export type InsertMoneyRecordMutationHookResult = ReturnType<typeof useInsertMon
 export type InsertMoneyRecordMutationResult = Apollo.MutationResult<InsertMoneyRecordMutation>;
 export type InsertMoneyRecordMutationOptions = Apollo.BaseMutationOptions<InsertMoneyRecordMutation, InsertMoneyRecordMutationVariables>;
 export const UpdateMoneyRecordDocument = gql`
-    mutation UpdateMoneyRecord($amount: Int, $date: date, $payer_id: uuid, $title: String, $_eq: uuid) {
+    mutation UpdateMoneyRecord($amount: Int, $date: timestamptz, $payer_id: uuid, $title: String, $_eq: uuid) {
   update_money_records(
     _set: {amount: $amount, date: $date, payer_id: $payer_id, title: $title}
     where: {id: {_eq: $_eq}}
