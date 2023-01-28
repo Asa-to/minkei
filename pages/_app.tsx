@@ -10,6 +10,7 @@ import {
 import { setContext } from '@apollo/client/link/context';
 import { getConfig } from 'src/config';
 import 'styles/globals.css';
+import { NotificationsProvider } from '@mantine/notifications';
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
@@ -40,8 +41,8 @@ export default function App(props: AppProps) {
       <Head>
         <title>みんけい</title>
         <meta
-          name="viewport"
-          content="minimum-scale=1, initial-scale=1, width=device-width"
+          name='viewport'
+          content='minimum-scale=1, initial-scale=1, width=device-width'
         />
       </Head>
 
@@ -52,9 +53,11 @@ export default function App(props: AppProps) {
           colorScheme: 'light',
         }}
       >
-        <ApolloProvider client={apolloClient}>
-          <Component {...pageProps} />
-        </ApolloProvider>
+        <NotificationsProvider>
+          <ApolloProvider client={apolloClient}>
+            <Component {...pageProps} />
+          </ApolloProvider>
+        </NotificationsProvider>
       </MantineProvider>
     </>
   );
