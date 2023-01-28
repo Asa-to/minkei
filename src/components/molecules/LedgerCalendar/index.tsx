@@ -9,7 +9,6 @@ import { FormData, InputForm } from '../InputModal/inputForm';
 
 type Props = {
   moneyRecords: Money_Records[];
-  moneyFetching: boolean;
   onDayClick: ({ money, title, date }: FormData) => void;
 };
 
