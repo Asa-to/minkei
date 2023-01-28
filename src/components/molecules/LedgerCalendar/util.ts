@@ -1,5 +1,5 @@
 import { isSameDate } from '@mantine/dates';
-import { MoneyRecord } from 'src/types/moneyRecord';
+import { Money_Records } from 'src/gql/types';
 
 /**
  * dateと一致する日の総出金額,総入金額を返す。
@@ -11,9 +11,9 @@ import { MoneyRecord } from 'src/types/moneyRecord';
  *   out: 出金総額,
  * }
  */
-export const getTotalFeeOfDay = (date: Date, records: MoneyRecord[]) => {
+export const getTotalFeeOfDay = (date: Date, records: Money_Records[]) => {
   const recordsOfDate = records.filter((record) =>
-    isSameDate(date, record.date)
+    isSameDate(date, new Date(record.date))
   );
   return {
     in: recordsOfDate
