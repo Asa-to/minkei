@@ -15,8 +15,6 @@ import {
 } from 'src/gql/types';
 import { useInputState } from '@mantine/hooks';
 import { Prism } from '@mantine/prism';
-import { InputForm } from 'src/components/molecules/InputModal/inputForm';
-import { InputModal } from 'src/components/molecules/InputModal';
 import { useState } from 'react';
 
 const Home = () => {
@@ -82,6 +80,7 @@ const Home = () => {
           onClick={() =>
             insertMoneyRecord({
               variables: {
+                date: new Date(),
                 title: 'unko',
                 amount: 10000,
                 payer_id: userData?.user[0].id,
@@ -131,19 +130,6 @@ const Home = () => {
             return <Prism language='json'>{JSON.stringify(moneyRecord)}</Prism>;
           })}
         </List>
-        <InputModal
-          open={open}
-          onClose={() => {
-            setOpen(false);
-          }}
-          onCancel={() => {
-            setOpen(false);
-          }}
-          selectedDate={new Date()}
-          onSubmit={() => {
-            setOpen(false);
-          }}
-        />
       </Stack>
     </Center>
   );
