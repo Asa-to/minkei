@@ -28,10 +28,10 @@ const Home = () => {
     moneyData?.money_records ?? initialMoney?.money_records ?? [];
   const isMoneyFetching = moneyLoading || initMoneyLoading;
 
-  // GraphQLエラーをキャッチ
-  if (moneyError || initMoneyError || insertError) {
-    return <></>;
-  }
+  // // GraphQLエラーをキャッチ
+  // if (moneyError || initMoneyError || insertError) {
+  //   return <></>;
+  // }
   const insertForm = ({ money, title, date }: FormData) => {
     console.log(date);
     insertMoney({
